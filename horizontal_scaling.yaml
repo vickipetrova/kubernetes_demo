@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-deployment
+spec:
+  replicas: 2
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 70
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+      - name: flask-app-container
+        image: my-flask-app:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            memory: "64MB"
+            cpu: "250m"
+          limits:
+            memory: "256MB"
+            cpu: "500m"
